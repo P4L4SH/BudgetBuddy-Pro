@@ -1,0 +1,18 @@
+[
+  {
+    "id": "73136292",
+    "description": "Grocery",
+    "amount": 1000,
+    "type": "expense",
+    "date": "2026-01-03T12:42:08.034Z",
+    "recurring": false
+  },
+  {
+    "id": "86014777",
+    "description": "nhhghg",
+    "amount": 234234,
+    "type": "income",
+    "date": "2026-01-03T12:42:15.462Z",
+    "recurring": false
+  }
+]

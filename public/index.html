@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BudgetBuddy Pro</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Chart.js library for analytics charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Main application wrapper -->
+    <div class="app-wrapper">
+        
+        <!-- Sidebar / Navigation -->
+        <nav class="sidebar">
+            <!-- Brand / Logo -->
+            <div class="brand">
+                <i class="fa-solid fa-wallet"></i>
+                <h2>BudgetBuddy</h2>
+            </div>
+            
+            <!-- Navigation links -->
+            <ul class="nav-links">
+                <li id="nav-dashboard" class="active"><i class="fa-solid fa-chart-pie"></i> Dashboard</li>
+                <li id="nav-transactions"><i class="fa-solid fa-list-ul"></i> Transactions</li>
+                <li id="nav-settings"><i class="fa-solid fa-gear"></i> Settings</li>
+            </ul>
+
+            <!-- User profile info -->
+            <div class="user-profile">
+                <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
+                <div class="user-info">
+                    <h4>My Wallet</h4>
+                    <small>Pro Member</small>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <main class="dashboard">
+            
+            <!-- Top header / navigation bar -->
+            <header class="top-bar">
+                <h1 id="page-title">Overview</h1>
+                <!-- Displays the current date -->
+                <div class="date-display" id="current-date">Today</div>
+            </header>
+
+            <!-- Dashboard view -->
+            <section id="view-dashboard" class="view-section">
+                
+                <!-- Statistics section -->
+                <div class="stats-grid">
+                    <div class="stat-card balance">
+                        <div class="stat-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                        <div><small>Total Balance</small><h2 id="balance">$0.00</h2></div>
+                    </div>
+                    <div class="stat-card income">
+                        <div class="stat-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                        <div><small>Total Income</small><h2 id="money-plus" class="text-green">+$0.00</h2></div>
+                    </div>
+                    <div class="stat-card expense">
+                        <div class="stat-icon"><i class="fa-solid fa-arrow-trend-down"></i></div>
+                        <div><small>Total Expense</small><h2 id="money-minus" class="text-red">-$0.00</h2></div>
+                    </div>
+                </div>
+
+                <!-- Middle section: Analytics and quick add form -->
+                <div class="middle-grid">
+                    <!-- Chart / Analytics Card -->
+                    <div class="card chart-card">
+                        <h3>Analytics</h3>
+                        <div class="chart-wrapper"><canvas id="expenseChart"></canvas></div>
+                    </div>
+
+                    <!-- Quick Add Transaction Form -->
+                    <div class="card form-card">
+                        <h3>Quick Add</h3>
+                        <form id="form">
+                            <!-- Hidden input for editing transactions -->
+                            <input type="hidden" id="edit-id" value="">
+                            
+                            <!-- Description input -->
+                            <div class="form-control">
+                                <label>Description</label>
+                                <input type="text" id="text" placeholder="Description..." required />
+                            </div>
+
+                            <!-- Amount and type inputs -->
+                            <div class="row-inputs">
+                                <div class="form-control">
+                                    <label>Amount</label>
+                                    <input type="number" id="amount" placeholder="0.00" required />
+                                </div>
+                                <div class="form-control">
+                                    <label>Type</label>
+                                    <select id="type">
+                                        <option value="expense">Expense</option>
+                                        <option value="income">Income</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Recurring transaction checkbox -->
+                            <div class="form-control checkbox-control">
+                                <input type="checkbox" id="recurring" style="width: auto;">
+                                <label for="recurring" style="display:inline; margin-bottom:0;">Repeat every month</label>
+                            </div>
+
+                            <!-- Submit button -->
+                            <button class="btn">Add Transaction</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions List -->
+                <div class="card history-card">
+                    <div class="card-header">
+                        <h3>Recent Transactions</h3>
+                        <div id="loader" class="loader"></div>
+                    </div>
+                    <ul id="list" class="list"></ul>
+                </div>
+            </section>
+
+            <!-- Transactions view -->
+            <section id="view-transactions" class="view-section hidden">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>All Transactions</h3>
+                        <!-- Search bar for filtering transactions -->
+                        <input type="text" id="search" placeholder="Search transactions..." class="search-input">
+                    </div>
+                    <ul id="full-list" class="list">
+                        </ul>
+                </div>
+            </section>
+
+            <!-- Settings / Data Management view -->
+            <section id="view-settings" class="view-section hidden">
+                <div class="card">
+                    <h3>Data Management</h3>
+                    <p style="margin-bottom: 20px; color: var(--text-muted);">Manage your local data.</p>
+                    <button id="reset-btn" class="btn" style="background-color: var(--danger);">
+                        <i class="fa-solid fa-trash"></i> Reset All Data
+                    </button>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+
+    <!-- Display current date dynamically -->
+    <script>
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    </script>
+</body>
+</html>
